@@ -31,8 +31,12 @@ Import node-cron and schedule a task:
 ```javascript
 const cron = require('node-cron');
 
-cron.schedule('* * * * *', () => {
+cron.schedule('* * * * *', (now, data) => {
   console.log('running a task every minute');
+}, {
+  data: {
+    label: "some data"
+  }
 });
 ```
 
@@ -41,7 +45,7 @@ cron.schedule('* * * * *', () => {
 ```javascript
 import cron from 'node-cron';
 
-cron.schedule('* * * * *', () => {
+cron.schedule('* * * * *', (now, data) => {
   console.log('running a task every minute');
 });
 ```
@@ -82,7 +86,7 @@ You may use multiples values separated by comma:
 ```javascript
 import cron from 'node-cron';
 
-cron.schedule('1,2,4,5 * * * *', () => {
+cron.schedule('1,2,4,5 * * * *', (now, data) => {
   console.log('running every minute 1, 2, 4 and 5');
 });
 ```
@@ -94,7 +98,7 @@ You may also define a range of values:
 ```javascript
 import cron from 'node-cron';
 
-cron.schedule('1-5 * * * *', () => {
+cron.schedule('1-5 * * * *', (now, data) => {
   console.log('running every minute to 1 from 5');
 });
 ```
@@ -106,7 +110,7 @@ Step values can be used in conjunction with ranges, following a range with '/' a
 ```javascript
 import cron from 'node-cron';
 
-cron.schedule('*/2 * * * *', () => {
+cron.schedule('*/2 * * * *', (now, data) => {
   console.log('running a task every two minutes');
 });
 ```
@@ -128,7 +132,7 @@ Or with short names:
 ```javascript
 import cron from 'node-cron';
 
-cron.schedule('* * * Jan,Sep Sun', () => {
+cron.schedule('* * * Jan,Sep Sun', (now, data) => {
   console.log('running on Sundays of January and September');
 });
 ```
@@ -156,11 +160,12 @@ Arguments:
  ```js
   import cron from 'node-cron';
 
-  cron.schedule('0 1 * * *', () => {
+  cron.schedule('0 1 * * *', (now, data) => {
     console.log('Running a job at 01:00 at America/Sao_Paulo timezone');
   }, {
     scheduled: true,
-    timezone: "America/Sao_Paulo"
+    timezone: "America/Sao_Paulo".
+    data: { name: "Penny" }
   });
  ```
 
@@ -176,7 +181,8 @@ import cron from 'node-cron';
 const task = cron.schedule('* * * * *', () =>  {
   console.log('stopped task');
 }, {
-  scheduled: false
+  scheduled: false,
+  data: { }
 });
 
 task.start();

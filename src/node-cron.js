@@ -10,6 +10,7 @@ const storage = require('./storage');
  * @prop {boolean} [scheduled] if a scheduled task is ready and running to be
  *  performed when the time matches the cron expression.
  * @prop {string} [timezone] the timezone to execute the task in.
+ * @prop {string} [data] any data associated to the task
  */
 
 /**
@@ -23,9 +24,7 @@ const storage = require('./storage');
  */
 function schedule(expression, func, options) {
     const task = createTask(expression, func, options);
-
     storage.save(task);
-
     return task;
 }
 
@@ -45,7 +44,6 @@ function createTask(expression, func, options) {
 function validate(expression) {
     try {
         validation(expression);
-
         return true;
     } catch (_) {
         return false;

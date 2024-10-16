@@ -4,10 +4,11 @@ const EventEmitter = require('events');
 const TimeMatcher = require('./time-matcher');
 
 class Scheduler extends EventEmitter{
-    constructor(pattern, timezone, autorecover){
+    constructor(pattern, timezone, autorecover, data){
         super();
         this.timeMatcher = new TimeMatcher(pattern, timezone);
         this.autorecover = autorecover;
+        this.data = data;
     }
 
     start(){

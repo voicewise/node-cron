@@ -3,18 +3,19 @@
 const EventEmitter = require('events');
 
 class Task extends EventEmitter{
-    constructor(execution){
+    constructor(execution, data){
         super();
         if(typeof execution !== 'function') {
             throw 'execution must be a function';
         }
+        this._data = data;
         this._execution = execution;
     }
 
     execute(now) {
         let exec;
         try {
-            exec = this._execution(now);
+            exec = this._execution(now, this._data);
         } catch (error) {
             return this.emit('task-failed', error);
         }
